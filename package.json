@@ -1,0 +1,26 @@
+{
+  "name": "kixx-lib-es6",
+  "version": "1.0.0",
+  "description": "A general purpose ES6 library",
+  "main": "index.js",
+  "scripts": {
+    "test": "eslint ./ && kixx-test-node",
+    "lint": "eslint ./"
+  },
+  "author": "Kris Walker (www.kixx.name)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kixxauth/kixx-lib-es6.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kixxauth/kixx-lib-es6/issues"
+  },
+  "homepage": "https://github.com/kixxauth/kixx-lib-es6#readme",
+  "devDependencies": {
+    "eslint": "5.7.0",
+    "kixx-assert": "1.0.5",
+    "kixx-test-node": "1.2.5",
+    "ramda": "0.25.0"
+  }
+}
