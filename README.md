@@ -6,7 +6,7 @@ Installation
 ------------
 
 ```
-$ npm install --save kixx
+$ npm install --save kixx-lib-es6
 ```
 
 ## Library
