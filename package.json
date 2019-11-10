@@ -1,6 +1,6 @@
 {
   "name": "kixx-lib-es6",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A general purpose ES6 library",
   "main": "index.js",
   "scripts": {
@@ -18,9 +18,9 @@
   },
   "homepage": "https://github.com/kixxauth/kixx-lib-es6#readme",
   "devDependencies": {
-    "eslint": "5.7.0",
+    "eslint": "~6.6.0",
     "kixx-assert": "1.0.5",
-    "kixx-test-node": "1.2.5",
-    "ramda": "0.25.0"
+    "kixx-test-node": "~1.4.1",
+    "ramda": "~0.26.1"
   }
 }
