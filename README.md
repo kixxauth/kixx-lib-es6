@@ -40,13 +40,16 @@ object | Object | An Object to deeply freeze.
 Returns the passed Object after recursively calling Object.freeze() deeply throughout.
 
 ### mergeDeep()
-__`mergeDeep(object, ...)`__
+__`mergeDeep(target, ...sources)`__
 
 parameter | type | description
 --------- | ---- | -----------
-object | Object | An Object merge deeply.
+target | Object | The target object to merge into.
+sources | Objects | Source objects to merge into the target.
 
-Returns a new Object after deeply merging all passed in Objects from left to right. The right most Object has precedence.
+Returns the target Object after deeply merging all passed in Objects from left to right. The right most Object has precedence. The target object will be mutated. Source objects will not be mutated.
+
+Will throw a TypeError if the target prototype is not Object.prototype or null.
 
 
 ### random()

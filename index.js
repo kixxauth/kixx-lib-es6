@@ -2,44 +2,26 @@
 
 const protoToString = Object.prototype.toString;
 
+function isPlainObject(obj) {
+	if (obj && typeof obj === 'object') {
+		const proto = Object.getPrototypeOf(obj);
+		return proto === Object.prototype || proto === null;
+	}
+	return false;
+}
+
 function compact(list) {
 	return list.filter((x) => x);
 }
 exports.compact = compact;
 
-function mergeDeep() {
-	const objects = Array.prototype.slice.call(arguments);
-
-	let hasObject = false;
-	let target;
+function mergeDeep(target, ...objects) {
+	if (!isPlainObject(target)) {
+		throw new TypeError('Merge target must be a plain Object');
+	}
 
 	for (let i = 0; i < objects.length; i++) {
-		const source = objects[i];
-
-		if (Array.isArray(source)) {
-			if (hasObject) continue;
-			target = source.map(clone);
-			continue;
-		}
-
-		if (typeof source !== 'object' || source === null) {
-			if (hasObject) continue;
-			target = source;
-			continue;
-		}
-
-		if (protoToString.call(source) === '[object Date]') {
-			if (hasObject) continue;
-			target = new Date(source.toString());
-			continue;
-		}
-
-		if (!hasObject) {
-			target = {};
-			hasObject = true;
-		}
-
-		target = mergeObject(target, source);
+		mergeObject(target, objects[i]);
 	}
 
 	return target;
@@ -47,31 +29,28 @@ function mergeDeep() {
 exports.mergeDeep = mergeDeep;
 
 function mergeObject(target, source) {
-	const keys = Object.keys(source);
+	if (source && typeof source === 'object') {
+		const keys = Object.keys(source);
 
-	for (let i = 0; i < keys.length; i++) {
-		const key = keys[i];
-		const v = source[key];
-		const t = target[key];
+		for (let i = 0; i < keys.length; i++) {
+			const key = keys[i];
+			const val = source[key];
 
-		if (typeof v !== 'object' || v === null) {
-			target[key] = v;
-			continue;
+			// Array and Date instances are simply copied by reference. We do that here, otherwise they
+			// would trigger the (val && typeof val === 'object') check.
+			if (Array.isArray(val) || protoToString.call(val) === '[object Date]') {
+				target[key] = val;
+			} else if (val && typeof val === 'object') {
+				// Objects are recursively merged, but we need to ensure the target object exists first.
+				if (!target[key] || typeof target[key] !== 'object') {
+					target[key] = {};
+				}
+				target[key] = mergeObject(target[key], val);
+			} else {
+				// Assume it is a primitive value and copy by reference.
+				target[key] = val;
+			}
 		}
-		if (Array.isArray(v)) {
-			target[key] = v.map(clone);
-			continue;
-		}
-		if (protoToString.call(v) === '[object Date]') {
-			target[key] = new Date(v.toString());
-			continue;
-		}
-		if (typeof t !== 'object' || t === null) {
-			target[key] = clone(v);
-			continue;
-		}
-
-		target[key] = mergeObject(t, v);
 	}
 
 	return target;
@@ -85,7 +64,7 @@ function clone(obj) {
 	if (Array.isArray(obj)) return obj.map(clone);
 
 	if (protoToString.call(obj) === '[object Date]') {
-		return new Date(obj.toString());
+		return new Date(obj.getTime());
 	}
 
 	const keys = Object.keys(obj);

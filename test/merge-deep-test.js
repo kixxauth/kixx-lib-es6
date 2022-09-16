@@ -4,81 +4,11 @@ const {assert} = require('kixx-assert');
 const {mergeDeep} = require('../index');
 
 module.exports = function (t) {
-	t.describe('when undefined is last', () => {
-		t.it('returns undefined', function (t, _, u) {
-			const x = mergeDeep(_, u);
-
-			assert.isEqual('undefined', typeof x);
-			assert.isEqual(x, u);
-		});
-	});
-	t.describe('when null is last', () => {
-		t.it('returns null', function (t, _) {
-			const y = null;
-			const x = mergeDeep(_, y);
-
-			assert.isEqual(x, null);
-			assert.isEqual(x, y);
-		});
-	});
-	t.describe('when NaN is last', () => {
-		t.it('returns NaN', function (t, _) {
-			const y = NaN;
-			const x = mergeDeep(_, y);
-
-			assert.isEqual(x, NaN);
-			assert.isEqual(x, y);
-		});
-	});
-	t.describe('when number is last', () => {
-		t.it('returns number', function (t, _) {
-			const y = 0;
-			const x = mergeDeep(_, y);
-
-			assert.isEqual(x, 0);
-			assert.isEqual(x, y);
-		});
-	});
-	t.describe('when string is last', () => {
-		t.it('returns string', function (t, _) {
-			const y = '';
-			const x = mergeDeep(_, y);
-
-			assert.isEqual(x, '');
-			assert.isEqual(x, y);
-		});
-	});
-	t.describe('when boolean is last', () => {
-		t.it('returns boolean', function (t, _) {
-			const y = false;
-			const x = mergeDeep(_, y);
-
-			assert.isEqual(x, false);
-			assert.isEqual(x, y);
-		});
-	});
-	t.describe('when function is last', () => {
-		t.it('returns boolean', function (t, _) {
-			const y = function () {};
-			const x = mergeDeep(_, y);
-
-			assert.isEqual(x, y);
-		});
-	});
-	t.describe('when date is last', () => {
-		t.it('returns a copy of the date', function (t, _) {
-			const y = new Date();
-			const x = mergeDeep(_, y);
-
-			assert.isNotEqual(x, y);
-			assert.isEqual(y.toString(), x.toString());
-		});
-	});
 	t.describe('when array is last', () => {
-		t.it('returns a deep copy of the array', function (t, _) {
+		t.it('returns a deep copy of the array', function (t) {
 			const A = {A: 1};
 			const y = [A];
-			const x = mergeDeep(_, y);
+			const x = mergeDeep({}, y);
 
 			assert.isNotEqual(y, x);
 			assert.isNotEqual(y[0], x[0]);
@@ -90,10 +20,9 @@ module.exports = function (t) {
 		const A = {A: 1};
 
 		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, A, _);
+			const x = mergeDeep({}, A, _);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isEqual(1, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
@@ -102,11 +31,10 @@ module.exports = function (t) {
 	t.describe('merge oject when null is last', () => {
 		const A = {A: 1};
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, A, null);
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, A, null);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isEqual(1, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
@@ -115,11 +43,10 @@ module.exports = function (t) {
 	t.describe('merge oject when NaN is last', () => {
 		const A = {A: 1};
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, A, NaN);
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, A, NaN);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isEqual(1, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
@@ -128,11 +55,10 @@ module.exports = function (t) {
 	t.describe('merge oject when number is last', () => {
 		const A = {A: 1};
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, A, 1);
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, A, 1);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isEqual(1, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
@@ -141,11 +67,10 @@ module.exports = function (t) {
 	t.describe('merge oject when string is last', () => {
 		const A = {A: 1};
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, A, 'z');
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, A, 'z');
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isEqual(1, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
@@ -154,11 +79,10 @@ module.exports = function (t) {
 	t.describe('merge oject when boolean is last', () => {
 		const A = {A: 1};
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, A, true);
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, A, true);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isEqual(1, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
@@ -169,11 +93,10 @@ module.exports = function (t) {
 		const fn = function () {};
 		fn.B = 2;
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, A, fn);
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, A, fn);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isEqual(1, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
@@ -184,12 +107,11 @@ module.exports = function (t) {
 		const d = new Date();
 		d.B = 2;
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, A, d);
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, A, d);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
-			assert.isEqual(1, Object.keys(x).length);
+			assert.isEqual(2, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
 		});
@@ -197,11 +119,10 @@ module.exports = function (t) {
 	t.describe('merge oject when array is last', () => {
 		const A = {A: 1};
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, A, []);
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, A, []);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isEqual(1, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
@@ -212,11 +133,10 @@ module.exports = function (t) {
 	t.describe('merge an object into undefined', function (t) {
 		const A = {A: 1};
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, _, A);
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, A);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isEqual(1, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
@@ -225,11 +145,10 @@ module.exports = function (t) {
 	t.describe('merge an object into null', function (t) {
 		const A = {A: 1};
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, null, A);
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, null, A);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isEqual(1, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
@@ -238,11 +157,10 @@ module.exports = function (t) {
 	t.describe('merge an object into NaN', function (t) {
 		const A = {A: 1};
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, NaN, A);
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, NaN, A);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isEqual(1, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
@@ -251,11 +169,10 @@ module.exports = function (t) {
 	t.describe('merge an object into a number', function (t) {
 		const A = {A: 1};
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, 1, A);
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, 1, A);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isEqual(1, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
@@ -264,11 +181,10 @@ module.exports = function (t) {
 	t.describe('merge an object into a string', function (t) {
 		const A = {A: 1};
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, 'z', A);
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, 'z', A);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isEqual(1, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
@@ -277,11 +193,10 @@ module.exports = function (t) {
 	t.describe('merge an object into a boolean', function (t) {
 		const A = {A: 1};
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, true, A);
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, true, A);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isEqual(1, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
@@ -291,11 +206,10 @@ module.exports = function (t) {
 		const fn = function () {};
 		const A = {A: 1};
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, fn, A);
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, fn, A);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isEqual(1, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
@@ -305,11 +219,10 @@ module.exports = function (t) {
 		const d = new Date();
 		const A = {A: 1};
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, d, A);
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, d, A);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isEqual(1, Object.keys(x).length);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
@@ -319,13 +232,13 @@ module.exports = function (t) {
 		const arr = [0];
 		const A = {A: 1};
 
-		t.it('returns a copy of the object', function (t, _) {
-			const x = mergeDeep(_, arr, A);
+		t.it('returns a copy of the object', function (t) {
+			const x = mergeDeep({}, arr, A);
 
 			assert.isNotEqual(A, x);
-			assert.isNotEqual(_, x);
 			assert.isNotEqual(arr, x);
-			assert.isEqual(1, Object.keys(x).length);
+			assert.isEqual(2, Object.keys(x).length);
+			assert.isEqual(0, x['0']);
 			assert.isEqual(1, x.A);
 			assert.isEqual('[object Object]', x.toString());
 		});
@@ -353,10 +266,10 @@ module.exports = function (t) {
 
 			const x1 = mergeDeep(x);
 
-			assert.isNotEqual(x, x1);
-			assert.isNotEqual(x.a, x1.a);
-			assert.isNotEqual(x.b, x1.b);
-			assert.isNotEqual(x.c, x1.c);
+			assert.isEqual(x, x1);
+			assert.isEqual(x.a, x1.a);
+			assert.isEqual(x.b, x1.b);
+			assert.isEqual(x.c, x1.c);
 
 			assert.isEqual(null, x1.a.n);
 			assert.isEqual(0, x1.a.i);
@@ -367,8 +280,8 @@ module.exports = function (t) {
 			assert.isEqual(NaN, x1.b.na);
 			assert.isEqual(fn, x1.b.fn);
 
-			assert.isNotEqual(x.c[0], x1.c[0]);
-			assert.isNotEqual(x.c[1], x1.c[1]);
+			assert.isEqual(x.c[0], x1.c[0]);
+			assert.isEqual(x.c[1], x1.c[1]);
 			assert.isEqual(2, x1.c.length);
 
 			assert.isEqual(null, x1.c[0].n);
@@ -405,11 +318,11 @@ module.exports = function (t) {
 
 			const x1 = mergeDeep(blank, x);
 
-			assert.isNotEqual(blank, x1);
+			assert.isEqual(blank, x1);
 			assert.isNotEqual(x, x1);
 			assert.isNotEqual(x.a, x1.a);
 			assert.isNotEqual(x.b, x1.b);
-			assert.isNotEqual(x.c, x1.c);
+			assert.isEqual(x.c, x1.c);
 
 			assert.isEqual(null, x1.a.n);
 			assert.isEqual(0, x1.a.i);
@@ -420,8 +333,8 @@ module.exports = function (t) {
 			assert.isEqual(NaN, x1.b.na);
 			assert.isEqual(fn, x1.b.fn);
 
-			assert.isNotEqual(x.c[0], x1.c[0]);
-			assert.isNotEqual(x.c[1], x1.c[1]);
+			assert.isEqual(x.c[0], x1.c[0]);
+			assert.isEqual(x.c[1], x1.c[1]);
 			assert.isEqual(2, x1.c.length);
 
 			assert.isEqual(null, x1.c[0].n);
@@ -456,12 +369,12 @@ module.exports = function (t) {
 
 			const x = {a, b, c};
 
-			const x1 = mergeDeep(null, {a: {n: 1}, b: {bt: 0}, c: 1, z: 99}, 0, 1.1, 'x', true, false, NaN, _, arr, fn, date, x);
+			const x1 = mergeDeep({}, {a: {n: 1}, b: {bt: 0}, c: 1, z: 99}, 0, 1.1, 'x', true, false, NaN, _, arr, fn, date, x);
 
 			assert.isNotEqual(x, x1);
 			assert.isNotEqual(x.a, x1.a);
 			assert.isNotEqual(x.b, x1.b);
-			assert.isNotEqual(x.c, x1.c);
+			assert.isEqual(x.c, x1.c);
 
 			assert.isEqual(null, x1.a.n);
 			assert.isEqual(0, x1.a.i);
@@ -472,8 +385,8 @@ module.exports = function (t) {
 			assert.isEqual(NaN, x1.b.na);
 			assert.isEqual(fn, x1.b.fn);
 
-			assert.isNotEqual(x.c[0], x1.c[0]);
-			assert.isNotEqual(x.c[1], x1.c[1]);
+			assert.isEqual(x.c[0], x1.c[0]);
+			assert.isEqual(x.c[1], x1.c[1]);
 			assert.isEqual(2, x1.c.length);
 
 			assert.isEqual(null, x1.c[0].n);
@@ -648,14 +561,14 @@ module.exports = function (t) {
 
 			assert.isEqual(null, x.a);
 			assert.isEqual(null, x.b);
-			assert.isNotEqual(d, x.c);
+			assert.isEqual(d, x.c);
 			assert.isEqual(d.toString(), x.c.toString());
 			assert.isEqual(null, x.d.a);
-			assert.isNotEqual(d, x.d.b);
+			assert.isEqual(d, x.d.b);
 			assert.isEqual(d.toString(), x.d.b.toString());
 			assert.isEqual(null, x.d.c);
 			assert.isEqual(null, x.d.e.a);
-			assert.isNotEqual(d, x.d.e.b);
+			assert.isEqual(d, x.d.e.b);
 			assert.isEqual(d.toString(), x.d.e.b.toString());
 			assert.isEqual(null, x.d.e.c);
 		});
@@ -678,14 +591,14 @@ module.exports = function (t) {
 
 			assert.isEqual(null, x.a);
 			assert.isEqual(null, x.b);
-			assert.isNotEqual(p, x.c);
+			assert.isEqual(p, x.c);
 			assert.isEqual(p.toString(), x.c.toString());
 			assert.isEqual(null, x.d.a);
-			assert.isNotEqual(p, x.d.b);
+			assert.isEqual(p, x.d.b);
 			assert.isEqual(p.toString(), x.d.b.toString());
 			assert.isEqual(null, x.d.c);
 			assert.isEqual(null, x.d.e.a);
-			assert.isNotEqual(p, x.d.e.b);
+			assert.isEqual(p, x.d.e.b);
 			assert.isEqual(p.toString(), x.d.e.b.toString());
 			assert.isEqual(null, x.d.e.c);
 		});
@@ -706,14 +619,14 @@ module.exports = function (t) {
 
 			assert.isEqual(null, x.a);
 			assert.isEqual(null, x.b);
-			assert.isNotEqual(a, x.c);
+			assert.isEqual(a, x.c);
 			assert.isEqual(1, x.c[0]);
 			assert.isEqual(null, x.d.a);
-			assert.isNotEqual(a, x.d.b);
+			assert.isEqual(a, x.d.b);
 			assert.isEqual(1, x.d.b[0]);
 			assert.isEqual(null, x.d.c);
 			assert.isEqual(null, x.d.e.a);
-			assert.isNotEqual(a, x.d.e.b);
+			assert.isEqual(a, x.d.e.b);
 			assert.isEqual(1, x.d.e.b[0]);
 			assert.isEqual(null, x.d.e.c);
 		});
@@ -878,14 +791,14 @@ module.exports = function (t) {
 
 			assert.isEqual(_, x.a);
 			assert.isEqual(_, x.b);
-			assert.isNotEqual(d, x.c);
+			assert.isEqual(d, x.c);
 			assert.isEqual(d.toString(), x.c.toString());
 			assert.isEqual(_, x.d.a);
-			assert.isNotEqual(d, x.d.b);
+			assert.isEqual(d, x.d.b);
 			assert.isEqual(d.toString(), x.d.b.toString());
 			assert.isEqual(_, x.d.c);
 			assert.isEqual(_, x.d.e.a);
-			assert.isNotEqual(d, x.d.e.b);
+			assert.isEqual(d, x.d.e.b);
 			assert.isEqual(d.toString(), x.d.e.b.toString());
 			assert.isEqual(_, x.d.e.c);
 		});
@@ -908,14 +821,14 @@ module.exports = function (t) {
 
 			assert.isEqual(_, x.a);
 			assert.isEqual(_, x.b);
-			assert.isNotEqual(p, x.c);
+			assert.isEqual(p, x.c);
 			assert.isEqual(p.toString(), x.c.toString());
 			assert.isEqual(_, x.d.a);
-			assert.isNotEqual(p, x.d.b);
+			assert.isEqual(p, x.d.b);
 			assert.isEqual(p.toString(), x.d.b.toString());
 			assert.isEqual(_, x.d.c);
 			assert.isEqual(_, x.d.e.a);
-			assert.isNotEqual(p, x.d.e.b);
+			assert.isEqual(p, x.d.e.b);
 			assert.isEqual(p.toString(), x.d.e.b.toString());
 			assert.isEqual(_, x.d.e.c);
 		});
@@ -936,14 +849,14 @@ module.exports = function (t) {
 
 			assert.isEqual(_, x.a);
 			assert.isEqual(_, x.b);
-			assert.isNotEqual(a, x.c);
+			assert.isEqual(a, x.c);
 			assert.isEqual(1, x.c[0]);
 			assert.isEqual(_, x.d.a);
-			assert.isNotEqual(a, x.d.b);
+			assert.isEqual(a, x.d.b);
 			assert.isEqual(1, x.d.b[0]);
 			assert.isEqual(_, x.d.c);
 			assert.isEqual(_, x.d.e.a);
-			assert.isNotEqual(a, x.d.e.b);
+			assert.isEqual(a, x.d.e.b);
 			assert.isEqual(1, x.d.e.b[0]);
 			assert.isEqual(_, x.d.e.c);
 		});
@@ -1108,14 +1021,14 @@ module.exports = function (t) {
 
 			assert.isEqual(0, x.a);
 			assert.isEqual(0, x.b);
-			assert.isNotEqual(d, x.c);
+			assert.isEqual(d, x.c);
 			assert.isEqual(d.toString(), x.c.toString());
 			assert.isEqual(0, x.d.a);
-			assert.isNotEqual(d, x.d.b);
+			assert.isEqual(d, x.d.b);
 			assert.isEqual(d.toString(), x.d.b.toString());
 			assert.isEqual(0, x.d.c);
 			assert.isEqual(0, x.d.e.a);
-			assert.isNotEqual(d, x.d.e.b);
+			assert.isEqual(d, x.d.e.b);
 			assert.isEqual(d.toString(), x.d.e.b.toString());
 			assert.isEqual(0, x.d.e.c);
 		});
@@ -1138,14 +1051,14 @@ module.exports = function (t) {
 
 			assert.isEqual(0, x.a);
 			assert.isEqual(0, x.b);
-			assert.isNotEqual(p, x.c);
+			assert.isEqual(p, x.c);
 			assert.isEqual(p.toString(), x.c.toString());
 			assert.isEqual(0, x.d.a);
-			assert.isNotEqual(p, x.d.b);
+			assert.isEqual(p, x.d.b);
 			assert.isEqual(p.toString(), x.d.b.toString());
 			assert.isEqual(0, x.d.c);
 			assert.isEqual(0, x.d.e.a);
-			assert.isNotEqual(p, x.d.e.b);
+			assert.isEqual(p, x.d.e.b);
 			assert.isEqual(p.toString(), x.d.e.b.toString());
 			assert.isEqual(0, x.d.e.c);
 		});
@@ -1166,14 +1079,14 @@ module.exports = function (t) {
 
 			assert.isEqual(0, x.a);
 			assert.isEqual(0, x.b);
-			assert.isNotEqual(a, x.c);
+			assert.isEqual(a, x.c);
 			assert.isEqual(1, x.c[0]);
 			assert.isEqual(0, x.d.a);
-			assert.isNotEqual(a, x.d.b);
+			assert.isEqual(a, x.d.b);
 			assert.isEqual(1, x.d.b[0]);
 			assert.isEqual(0, x.d.c);
 			assert.isEqual(0, x.d.e.a);
-			assert.isNotEqual(a, x.d.e.b);
+			assert.isEqual(a, x.d.e.b);
 			assert.isEqual(1, x.d.e.b[0]);
 			assert.isEqual(0, x.d.e.c);
 		});
@@ -1338,14 +1251,14 @@ module.exports = function (t) {
 
 			assert.isEqual('', x.a);
 			assert.isEqual('', x.b);
-			assert.isNotEqual(d, x.c);
+			assert.isEqual(d, x.c);
 			assert.isEqual(d.toString(), x.c.toString());
 			assert.isEqual('', x.d.a);
-			assert.isNotEqual(d, x.d.b);
+			assert.isEqual(d, x.d.b);
 			assert.isEqual(d.toString(), x.d.b.toString());
 			assert.isEqual('', x.d.c);
 			assert.isEqual('', x.d.e.a);
-			assert.isNotEqual(d, x.d.e.b);
+			assert.isEqual(d, x.d.e.b);
 			assert.isEqual(d.toString(), x.d.e.b.toString());
 			assert.isEqual('', x.d.e.c);
 		});
@@ -1368,14 +1281,14 @@ module.exports = function (t) {
 
 			assert.isEqual('', x.a);
 			assert.isEqual('', x.b);
-			assert.isNotEqual(p, x.c);
+			assert.isEqual(p, x.c);
 			assert.isEqual(p.toString(), x.c.toString());
 			assert.isEqual('', x.d.a);
-			assert.isNotEqual(p, x.d.b);
+			assert.isEqual(p, x.d.b);
 			assert.isEqual(p.toString(), x.d.b.toString());
 			assert.isEqual('', x.d.c);
 			assert.isEqual('', x.d.e.a);
-			assert.isNotEqual(p, x.d.e.b);
+			assert.isEqual(p, x.d.e.b);
 			assert.isEqual(p.toString(), x.d.e.b.toString());
 			assert.isEqual('', x.d.e.c);
 		});
@@ -1396,14 +1309,14 @@ module.exports = function (t) {
 
 			assert.isEqual('', x.a);
 			assert.isEqual('', x.b);
-			assert.isNotEqual(a, x.c);
+			assert.isEqual(a, x.c);
 			assert.isEqual(1, x.c[0]);
 			assert.isEqual('', x.d.a);
-			assert.isNotEqual(a, x.d.b);
+			assert.isEqual(a, x.d.b);
 			assert.isEqual(1, x.d.b[0]);
 			assert.isEqual('', x.d.c);
 			assert.isEqual('', x.d.e.a);
-			assert.isNotEqual(a, x.d.e.b);
+			assert.isEqual(a, x.d.e.b);
 			assert.isEqual(1, x.d.e.b[0]);
 			assert.isEqual('', x.d.e.c);
 		});
@@ -1568,14 +1481,14 @@ module.exports = function (t) {
 
 			assert.isEqual(false, x.a);
 			assert.isEqual(false, x.b);
-			assert.isNotEqual(d, x.c);
+			assert.isEqual(d, x.c);
 			assert.isEqual(d.toString(), x.c.toString());
 			assert.isEqual(false, x.d.a);
-			assert.isNotEqual(d, x.d.b);
+			assert.isEqual(d, x.d.b);
 			assert.isEqual(d.toString(), x.d.b.toString());
 			assert.isEqual(false, x.d.c);
 			assert.isEqual(false, x.d.e.a);
-			assert.isNotEqual(d, x.d.e.b);
+			assert.isEqual(d, x.d.e.b);
 			assert.isEqual(d.toString(), x.d.e.b.toString());
 			assert.isEqual(false, x.d.e.c);
 		});
@@ -1598,14 +1511,14 @@ module.exports = function (t) {
 
 			assert.isEqual(false, x.a);
 			assert.isEqual(false, x.b);
-			assert.isNotEqual(p, x.c);
+			assert.isEqual(p, x.c);
 			assert.isEqual(p.toString(), x.c.toString());
 			assert.isEqual(false, x.d.a);
-			assert.isNotEqual(p, x.d.b);
+			assert.isEqual(p, x.d.b);
 			assert.isEqual(p.toString(), x.d.b.toString());
 			assert.isEqual(false, x.d.c);
 			assert.isEqual(false, x.d.e.a);
-			assert.isNotEqual(p, x.d.e.b);
+			assert.isEqual(p, x.d.e.b);
 			assert.isEqual(p.toString(), x.d.e.b.toString());
 			assert.isEqual(false, x.d.e.c);
 		});
@@ -1626,14 +1539,14 @@ module.exports = function (t) {
 
 			assert.isEqual(false, x.a);
 			assert.isEqual(false, x.b);
-			assert.isNotEqual(a, x.c);
+			assert.isEqual(a, x.c);
 			assert.isEqual(1, x.c[0]);
 			assert.isEqual(false, x.d.a);
-			assert.isNotEqual(a, x.d.b);
+			assert.isEqual(a, x.d.b);
 			assert.isEqual(1, x.d.b[0]);
 			assert.isEqual(false, x.d.c);
 			assert.isEqual(false, x.d.e.a);
-			assert.isNotEqual(a, x.d.e.b);
+			assert.isEqual(a, x.d.e.b);
 			assert.isEqual(1, x.d.e.b[0]);
 			assert.isEqual(false, x.d.e.c);
 		});
@@ -1810,14 +1723,14 @@ module.exports = function (t) {
 
 			assert.isEqual(fn, x.a);
 			assert.isEqual(fn, x.b);
-			assert.isNotEqual(d, x.c);
+			assert.isEqual(d, x.c);
 			assert.isEqual(d.toString(), x.c.toString());
 			assert.isEqual(fn, x.d.a);
-			assert.isNotEqual(d, x.d.b);
+			assert.isEqual(d, x.d.b);
 			assert.isEqual(d.toString(), x.d.b.toString());
 			assert.isEqual(fn, x.d.c);
 			assert.isEqual(fn, x.d.e.a);
-			assert.isNotEqual(d, x.d.e.b);
+			assert.isEqual(d, x.d.e.b);
 			assert.isEqual(d.toString(), x.d.e.b.toString());
 			assert.isEqual(fn, x.d.e.c);
 		});
@@ -1841,14 +1754,14 @@ module.exports = function (t) {
 
 			assert.isEqual(fn, x.a);
 			assert.isEqual(fn, x.b);
-			assert.isNotEqual(p, x.c);
+			assert.isEqual(p, x.c);
 			assert.isEqual(p.toString(), x.c.toString());
 			assert.isEqual(fn, x.d.a);
-			assert.isNotEqual(p, x.d.b);
+			assert.isEqual(p, x.d.b);
 			assert.isEqual(p.toString(), x.d.b.toString());
 			assert.isEqual(fn, x.d.c);
 			assert.isEqual(fn, x.d.e.a);
-			assert.isNotEqual(p, x.d.e.b);
+			assert.isEqual(p, x.d.e.b);
 			assert.isEqual(p.toString(), x.d.e.b.toString());
 			assert.isEqual(fn, x.d.e.c);
 		});
@@ -1870,14 +1783,14 @@ module.exports = function (t) {
 
 			assert.isEqual(fn, x.a);
 			assert.isEqual(fn, x.b);
-			assert.isNotEqual(a, x.c);
+			assert.isEqual(a, x.c);
 			assert.isEqual(1, x.c[0]);
 			assert.isEqual(fn, x.d.a);
-			assert.isNotEqual(a, x.d.b);
+			assert.isEqual(a, x.d.b);
 			assert.isEqual(1, x.d.b[0]);
 			assert.isEqual(fn, x.d.c);
 			assert.isEqual(fn, x.d.e.a);
-			assert.isNotEqual(a, x.d.e.b);
+			assert.isEqual(a, x.d.e.b);
 			assert.isEqual(1, x.d.e.b[0]);
 			assert.isEqual(fn, x.d.e.c);
 		});
@@ -2082,14 +1995,14 @@ module.exports = function (t) {
 
 			assert.isEqual(d.toString(), x.a.toString());
 			assert.isEqual(d.toString(), x.b.toString());
-			assert.isNotEqual(p, x.c);
+			assert.isEqual(p, x.c);
 			assert.isEqual(p.toString(), x.c.toString());
 			assert.isEqual(d.toString(), x.d.a.toString());
-			assert.isNotEqual(p, x.d.b);
+			assert.isEqual(p, x.d.b);
 			assert.isEqual(p.toString(), x.d.b.toString());
 			assert.isEqual(d.toString(), x.d.c.toString());
 			assert.isEqual(d.toString(), x.d.e.a.toString());
-			assert.isNotEqual(p, x.d.e.b);
+			assert.isEqual(p, x.d.e.b);
 			assert.isEqual(p.toString(), x.d.e.b.toString());
 			assert.isEqual(d.toString(), x.d.e.c.toString());
 		});
@@ -2111,14 +2024,14 @@ module.exports = function (t) {
 
 			assert.isEqual(d.toString(), x.a.toString());
 			assert.isEqual(d.toString(), x.b.toString());
-			assert.isNotEqual(a, x.c);
+			assert.isEqual(a, x.c);
 			assert.isEqual(1, x.c[0]);
 			assert.isEqual(d.toString(), x.d.a.toString());
-			assert.isNotEqual(a, x.d.b);
+			assert.isEqual(a, x.d.b);
 			assert.isEqual(1, x.d.b[0]);
 			assert.isEqual(d.toString(), x.d.c.toString());
 			assert.isEqual(d.toString(), x.d.e.a.toString());
-			assert.isNotEqual(a, x.d.e.b);
+			assert.isEqual(a, x.d.e.b);
 			assert.isEqual(1, x.d.e.b[0]);
 			assert.isEqual(d.toString(), x.d.e.c.toString());
 		});
@@ -2295,14 +2208,14 @@ module.exports = function (t) {
 
 			assert.isEqual(1, x.a[0]);
 			assert.isEqual(1, x.b[0]);
-			assert.isNotEqual(d, x.c);
+			assert.isEqual(d, x.c);
 			assert.isEqual(d.toString(), x.c.toString());
 			assert.isEqual(1, x.d.a[0]);
-			assert.isNotEqual(d, x.d.b);
+			assert.isEqual(d, x.d.b);
 			assert.isEqual(d.toString(), x.d.b.toString());
 			assert.isEqual(1, x.d.c[0]);
 			assert.isEqual(1, x.d.e.a[0]);
-			assert.isNotEqual(d, x.d.e.b);
+			assert.isEqual(d, x.d.e.b);
 			assert.isEqual(d.toString(), x.d.e.b.toString());
 			assert.isEqual(1, x.d.e.c[0]);
 		});
@@ -2326,14 +2239,14 @@ module.exports = function (t) {
 
 			assert.isEqual(1, x.a[0]);
 			assert.isEqual(1, x.b[0]);
-			assert.isNotEqual(p, x.c);
+			assert.isEqual(p, x.c);
 			assert.isEqual(p.toString(), x.c.toString());
 			assert.isEqual(1, x.d.a[0]);
-			assert.isNotEqual(p, x.d.b);
+			assert.isEqual(p, x.d.b);
 			assert.isEqual(p.toString(), x.d.b.toString());
 			assert.isEqual(1, x.d.c[0]);
 			assert.isEqual(1, x.d.e.a[0]);
-			assert.isNotEqual(p, x.d.e.b);
+			assert.isEqual(p, x.d.e.b);
 			assert.isEqual(p.toString(), x.d.e.b.toString());
 			assert.isEqual(1, x.d.e.c[0]);
 		});
@@ -2355,14 +2268,14 @@ module.exports = function (t) {
 
 			assert.isEqual(1, x.a[0]);
 			assert.isEqual(1, x.b[0]);
-			assert.isNotEqual(a, x.c);
+			assert.isEqual(a, x.c);
 			assert.isEqual(2, x.c[0]);
 			assert.isEqual(1, x.d.a[0]);
-			assert.isNotEqual(a, x.d.b);
+			assert.isEqual(a, x.d.b);
 			assert.isEqual(2, x.d.b[0]);
 			assert.isEqual(1, x.d.c[0]);
 			assert.isEqual(1, x.d.e.a[0]);
-			assert.isNotEqual(a, x.d.e.b);
+			assert.isEqual(a, x.d.e.b);
 			assert.isEqual(2, x.d.e.b[0]);
 			assert.isEqual(1, x.d.e.c[0]);
 		});
@@ -2539,14 +2452,14 @@ module.exports = function (t) {
 
 			assert.isEqual(1, x.a.A);
 			assert.isEqual(1, x.b.A);
-			assert.isNotEqual(d, x.c);
+			assert.isEqual(d, x.c);
 			assert.isEqual(d.toString(), x.c.toString());
 			assert.isEqual(1, x.d.a.A);
-			assert.isNotEqual(d, x.d.b);
+			assert.isEqual(d, x.d.b);
 			assert.isEqual(d.toString(), x.d.b.toString());
 			assert.isEqual(1, x.d.c.A);
 			assert.isEqual(1, x.d.e.a.A);
-			assert.isNotEqual(d, x.d.e.b);
+			assert.isEqual(d, x.d.e.b);
 			assert.isEqual(d.toString(), x.d.e.b.toString());
 			assert.isEqual(1, x.d.e.c.A);
 		});
@@ -2570,14 +2483,14 @@ module.exports = function (t) {
 
 			assert.isEqual(1, x.a.A);
 			assert.isEqual(1, x.b.A);
-			assert.isNotEqual(p, x.c);
+			assert.isEqual(p, x.c);
 			assert.isEqual(p.toString(), x.c.toString());
 			assert.isEqual(1, x.d.a.A);
-			assert.isNotEqual(p, x.d.b);
+			assert.isEqual(p, x.d.b);
 			assert.isEqual(p.toString(), x.d.b.toString());
 			assert.isEqual(1, x.d.c.A);
 			assert.isEqual(1, x.d.e.a.A);
-			assert.isNotEqual(p, x.d.e.b);
+			assert.isEqual(p, x.d.e.b);
 			assert.isEqual(p.toString(), x.d.e.b.toString());
 			assert.isEqual(1, x.d.e.c.A);
 		});
@@ -2599,14 +2512,14 @@ module.exports = function (t) {
 
 			assert.isEqual(1, x.a.A);
 			assert.isEqual(1, x.b.A);
-			assert.isNotEqual(a, x.c);
+			assert.isEqual(a, x.c);
 			assert.isEqual(2, x.c[0]);
 			assert.isEqual(1, x.d.a.A);
-			assert.isNotEqual(a, x.d.b);
+			assert.isEqual(a, x.d.b);
 			assert.isEqual(2, x.d.b[0]);
 			assert.isEqual(1, x.d.c.A);
 			assert.isEqual(1, x.d.e.a.A);
-			assert.isNotEqual(a, x.d.e.b);
+			assert.isEqual(a, x.d.e.b);
 			assert.isEqual(2, x.d.e.b[0]);
 			assert.isEqual(1, x.d.e.c.A);
 		});
@@ -2617,7 +2530,7 @@ module.exports = function (t) {
 		const C = [6, 7];
 
 		t.it('does *not* mutate any of the arguments', () => {
-			mergeDeep(A, B, C);
+			mergeDeep({}, A, B, C);
 
 			assert.isEqual(4, A.length);
 			assert.isEqual(3, B.length);
@@ -2637,15 +2550,14 @@ module.exports = function (t) {
 		});
 
 		t.it('returns a copy of the last Array', () => {
-			const x = mergeDeep(A, B, C);
+			const x = mergeDeep({}, A, B, C);
 
 			assert.isNotEqual(A, x);
 			assert.isNotEqual(B, x);
 			assert.isNotEqual(C, x);
 
-			assert.isEqual(2, x.length);
-			assert.isEqual(6, x[0]);
-			assert.isEqual(7, x[1]);
+			assert.isEqual(6, x['0']);
+			assert.isEqual(7, x['1']);
 		});
 	});
 	t.describe('when all arguments are Arrays, smaller to larger', (t) => {
@@ -2654,7 +2566,7 @@ module.exports = function (t) {
 		const C = [1, 2, 3, 4];
 
 		t.it('does *not* mutate any of the arguments', () => {
-			mergeDeep(A, B, C);
+			mergeDeep({}, A, B, C);
 
 			assert.isEqual(2, A.length);
 			assert.isEqual(3, B.length);
@@ -2674,18 +2586,16 @@ module.exports = function (t) {
 		});
 
 		t.it('returns a copy of the last Array', () => {
-			const x = mergeDeep(A, B, C);
+			const x = mergeDeep({}, A, B, C);
 
 			assert.isNotEqual(A, x);
 			assert.isNotEqual(B, x);
 			assert.isNotEqual(C, x);
 
-			assert.isEqual(4, x.length);
-
-			assert.isEqual(1, x[0]);
-			assert.isEqual(2, x[1]);
-			assert.isEqual(3, x[2]);
-			assert.isEqual(4, x[3]);
+			assert.isEqual(1, x['0']);
+			assert.isEqual(2, x['1']);
+			assert.isEqual(3, x['2']);
+			assert.isEqual(4, x['3']);
 		});
 	});
 	t.describe('when all arguments are Objects, larger to smaller', () => {
@@ -2695,11 +2605,6 @@ module.exports = function (t) {
 
 		t.it('does *not* mutate any of the arguments', () => {
 			mergeDeep(A, B, C);
-
-			assert.isEqual(0, A.a);
-			assert.isEqual(0, A.b);
-			assert.isEqual(0, A.c);
-			assert.isEqual(0, A.d);
 
 			assert.isEqual(1, B.b);
 			assert.isEqual(1, B.c);
@@ -2712,7 +2617,7 @@ module.exports = function (t) {
 		t.it('overwrites right to left', () => {
 			const x = mergeDeep(A, B, C);
 
-			assert.isNotEqual(A, x);
+			assert.isEqual(A, x);
 			assert.isNotEqual(B, x);
 			assert.isNotEqual(C, x);
 
@@ -2732,8 +2637,8 @@ module.exports = function (t) {
 		t.it('does *not* mutate any of the arguments', () => {
 			mergeDeep(A, B, C);
 
-			assert.isEqual(0, A.b);
-			assert.isEqual(0, A.c);
+			assert.isEqual(2, A.b);
+			assert.isEqual(2, A.c);
 
 			assert.isEqual(1, B.b);
 			assert.isEqual(1, B.c);
@@ -2748,7 +2653,7 @@ module.exports = function (t) {
 		t.it('overwrites right to left', () => {
 			const x = mergeDeep(A, B, C);
 
-			assert.isNotEqual(A, x);
+			assert.isEqual(A, x);
 			assert.isNotEqual(B, x);
 			assert.isNotEqual(C, x);
 
@@ -2870,46 +2775,6 @@ module.exports = function (t) {
 			assert.isEqual(2, x.C.c);
 			assert.isEqual(2, x.C.d);
 		});
-
-		t.it('does not mutate any of the objects', () => {
-			mergeDeep(A, B, C);
-
-			assert.isEqual(2, Object.keys(A.A).length);
-			assert.isEqual(0, A.A.a);
-			assert.isEqual(0, A.A.b);
-
-			assert.isEqual(2, Object.keys(A.B).length);
-			assert.isEqual(0, A.B.a);
-			assert.isEqual(0, A.B.b);
-
-			assert.isEqual(2, Object.keys(A.C).length);
-			assert.isEqual(0, A.C.a);
-			assert.isEqual(0, A.C.b);
-
-			assert.isEqual(2, Object.keys(B.A).length);
-			assert.isEqual(1, B.A.a);
-			assert.isEqual(1, B.A.b);
-
-			assert.isEqual(2, Object.keys(B.B).length);
-			assert.isEqual(1, B.B.c);
-			assert.isEqual(1, B.B.d);
-
-			assert.isEqual(2, Object.keys(B.C).length);
-			assert.isEqual(1, B.C.a);
-			assert.isEqual(1, B.C.c);
-
-			assert.isEqual(2, Object.keys(C.A).length);
-			assert.isEqual(2, C.A.a);
-			assert.isEqual(2, C.A.b);
-
-			assert.isEqual(2, Object.keys(C.B).length);
-			assert.isEqual(2, C.B.e);
-			assert.isEqual(2, C.B.f);
-
-			assert.isEqual(2, Object.keys(C.C).length);
-			assert.isEqual(2, C.C.c);
-			assert.isEqual(2, C.C.d);
-		});
 	});
 
 	t.describe('merging objects with different numbers of keys deeply', () => {
@@ -2931,15 +2796,15 @@ module.exports = function (t) {
 		t.it('does not mutate any of the objects', () => {
 			mergeDeep(A, B, C);
 
-			assert.isEqual(2, Object.keys(A.A).length);
-			assert.isEqual(0, A.A.a);
-			assert.isEqual(0, A.A.b);
+			assert.isEqual(4, Object.keys(A.A).length);
+			assert.isEqual(2, A.A.a);
+			assert.isEqual(2, A.A.b);
 
 			assert.isEqual(4, Object.keys(A.B).length);
-			assert.isEqual(0, A.B.a);
-			assert.isEqual(0, A.B.b);
-			assert.isEqual(0, A.B.c);
-			assert.isEqual(0, A.B.d);
+			assert.isEqual(2, A.B.a);
+			assert.isEqual(2, A.B.b);
+			assert.isEqual(1, A.B.c);
+			assert.isEqual(1, A.B.d);
 
 			assert.isEqual(3, Object.keys(B.A).length);
 			assert.isEqual(1, B.A.b);
@@ -2990,18 +2855,22 @@ module.exports = function (t) {
 	t.describe('with non enumerable members', (t) => {
 		const A = Object.defineProperties({}, {
 			a: {
+				writable: true,
 				enumerable: true,
 				value: 1
 			},
 			b: {
+				writable: true,
 				enumerable: false,
 				value: 1
 			},
 			c: {
+				writable: true,
 				enumerable: false,
 				value: 1
 			},
 			z: {
+				writable: true,
 				enumerable: true,
 				value: Object.defineProperties({}, {
 					a: {
@@ -3061,7 +2930,7 @@ module.exports = function (t) {
 		});
 
 		t.it('does not merge non enumerable props', () => {
-			const x = mergeDeep(A, B);
+			const x = mergeDeep({}, A, B);
 
 			assert.isEqual(3, Object.getOwnPropertyNames(x).length);
 			assert.isEqual(3, Object.keys(x).length);

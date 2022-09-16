@@ -1,6 +1,6 @@
 {
   "name": "kixx-lib-es6",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "A general purpose ES6 library",
   "main": "index.js",
   "scripts": {
