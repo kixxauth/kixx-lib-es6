@@ -82,15 +82,6 @@ n   | Number | The Number to clamp.
 
 Returns Number n only if it is greater then or equal to the minimum and less than the maximum. Otherwise, return the min or max as appropriate.
 
-### capitalize()
-__`capitalize(str)`__
-
-parameter | type | description
---------- | ---- | -----------
-min | String | The String to capitalize.
-
-Uppercase the first character of the given String and return the new String.
-
 Copyright and License
 ---------------------
 Copyright: (c) 2017 - 2018 by Kris Walker (www.kixx.name)
