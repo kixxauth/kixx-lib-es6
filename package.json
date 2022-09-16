@@ -18,9 +18,8 @@
   },
   "homepage": "https://github.com/kixxauth/kixx-lib-es6#readme",
   "devDependencies": {
-    "eslint": "~6.6.0",
-    "kixx-assert": "1.0.5",
-    "kixx-test-node": "~1.4.1",
-    "ramda": "~0.26.1"
+    "eslint": "~8.23.1",
+    "kixx-assert": "~1.1.0",
+    "kixx-test-node": "~1.4.3"
   }
 }
